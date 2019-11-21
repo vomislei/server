@@ -1,4 +1,4 @@
-package br.edu.utfpr.pb.oficinaweb;
+package br.edu.utfpr.pb.tcc2;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
