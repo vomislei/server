@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-// @Inheritance(strategy = InheritanceType.JOINED)
 public class Imovel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -80,8 +79,11 @@ public class Imovel implements Serializable {
 	@JoinColumn(name = "idbairro", referencedColumnName = "id")
 	private Bairro bairro;
 	
+	@Column(name = "imagem", length = 1024, nullable = true)
+	private String imagem;
+	
 	//METHODS GET AND SET 
-
+/*
 	public Long getId() {
 		return id;
 	}
@@ -218,6 +220,12 @@ public class Imovel implements Serializable {
 		this.bairro = bairro;
 	}
 
-	
-	
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+*/	
 }

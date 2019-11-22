@@ -42,7 +42,7 @@ public class NegociacaoServiceImpl extends CrudServiceImpl<Negociacao, Long> imp
 
 		negociacao = save(negociacaoaux);
 		
-		if (negociacao.getStatus() != StatusNegociacaoEnum.FINALIZADA && negociacao.getStatus() != StatusNegociacaoEnum.ABERTA) {
+		if (negociacao.getStatus() != StatusNegociacaoEnum.FINALIZADA) {
 			negociacao.setDatafim(LocalDate.now());
 			negociacao.setStatus(StatusNegociacaoEnum.FINALIZADA);
 			negociacao.getImovel().setAtivo(Boolean.FALSE);
@@ -50,17 +50,13 @@ public class NegociacaoServiceImpl extends CrudServiceImpl<Negociacao, Long> imp
 			negociacao.getImovel().setLocacao(Boolean.FALSE);
 			save(negociacao);
 			
-			if (negociacao.getTiponegocio()) { // TRUE PARA ALUGUEL
+			if (negociacao.getTiponegocio()) {
 				pagarService.contaaPagar(negociacao);
 				receberService.contaaReceberAluguel(negociacao);
-			} else { // Caso seja venda
+			} else {
 				receberService.contaaReceberVenda(negociacao);
-
-				Imovel imovel = new Imovel();
 				
-				System.out.println("imovel vazio: " + imovel);
-
-
+				Imovel imovel = new Imovel();
 				imovel.setCliente(negociacao.getCliente());
 				imovel.setAtivo(Boolean.TRUE);
 				imovel.setVenda(Boolean.FALSE);
@@ -75,11 +71,7 @@ public class NegociacaoServiceImpl extends CrudServiceImpl<Negociacao, Long> imp
 				imovel.setMterreno(negociacao.getImovel().getMterreno());
 				imovel.setMimovel(negociacao.getImovel().getMimovel());
 				imovel.setCep(negociacao.getImovel().getCep());
-				
-				System.out.println("imovel completo: " + imovel);
-
 				imovelService.save(imovel);
-
 			}
 
 		}
